@@ -2,6 +2,10 @@ package u03
 
 import u03.Optionals.Optional
 import u03.Optionals.Optional.*
+import u02.Tuples
+import u02.Tuples.*
+
+import scala.annotation.tailrec
 
 object Sequences: // Essentially, generic linkedlists
 
@@ -33,7 +37,10 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30], 0 => [10, 20, 30]
      * E.g., [], 2 => []
      */
-    def skip[A](s: Sequence[A])(n: Int): Sequence[A] = ???
+    def skip[A](s: Sequence[A])(n: Int): Sequence[A] = (s,n) match
+      case (Nil(), _) => Nil()
+      case (Cons(_,t), n) if n != 0 => skip(t)(n-1)
+      case (Cons(h,t), _) => Cons(h,t)
 
     /*
      * Zip two sequences
@@ -41,7 +48,10 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10], [] => []
      * E.g., [], [] => []
      */
-    def zip[A, B](first: Sequence[A], second: Sequence[B]): Sequence[(A, B)] = ???
+    def zip[A, B](first: Sequence[A], second: Sequence[B]): Sequence[(A, B)] = (first,second) match
+      case (Nil(), _) => Nil()
+      case (_, Nil()) => Nil()
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons((h1, h2), zip(t1, t2))
 
     /*
      * Concatenate two sequences
@@ -49,7 +59,15 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10], [] => [10]
      * E.g., [], [] => []
      */
-    def concat[A](s1: Sequence[A], s2: Sequence[A]): Sequence[A] = ???
+    def concat[A](s1: Sequence[A], s2: Sequence[A]): Sequence[A] = (s1, s2) match
+      /*case (Nil(), Nil()) => Nil()
+      case _ => (s1,s2) match
+        case (Nil(), _) => s2
+        case (_, Nil()) => s1
+        case (Cons(h,t), Cons(h2,t2)) => Cons(h,concat(t, Cons(h2,t2)))*/
+      case (Nil(), _) => s2
+      case (_, Nil()) => s1
+      case (Cons(h, t), Cons(h2, t2)) => Cons(h, concat(t, Cons(h2, t2)))
 
     /*
      * Reverse the sequence
@@ -57,7 +75,17 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10] => [10]
      * E.g., [] => []
      */
-    def reverse[A](s: Sequence[A]): Sequence[A] = ???
+      /*
+      * Ad ogni iterazione:
+      * - richiamo la funzione sulla sequenza rimanente (cioè la tail)
+      * - creo una sequenza che ha come testa h e come coda ciò che ho accumulato
+      * */
+    def reverse[A](s: Sequence[A]): Sequence[A] =
+      @tailrec
+      def _loop(seq: Sequence[A], acc: Sequence[A]) : Sequence[A] = seq match
+        case Nil() => acc
+        case Cons(h, t) => _loop(t, Cons(h, acc))
+      _loop(s, Nil())
 
     /*
      * Map the elements of the sequence to a new sequence and flatten the result
@@ -65,7 +93,12 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10, 20, 30], calling with mapper(v => [v]) returns [10, 20, 30]
      * E.g., [10, 20, 30], calling with mapper(v => Nil()) returns []
      */
-    def flatMap[A, B](s: Sequence[A])(mapper: A => Sequence[B]): Sequence[B] = ???
+    def flatMap[A, B](s: Sequence[A])(mapper: A => Sequence[B]): Sequence[B] =
+      @tailrec
+      def _loop(seq: Sequence[A], acc: Sequence[B]): Sequence[B] = seq match
+        case Nil() => acc
+        case Cons(h, t) => _loop(t, concat(acc, mapper(h)))
+      _loop(s, Nil())
 
     /*
      * Get the minimum element in the sequence
