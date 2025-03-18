@@ -14,3 +14,8 @@ object Lab03:
     flatMap(filter(p)(!isStudent(_))) (t => t match
         case Teacher(n,c) => Cons(c,Nil()))
 
+    def foldLeft[A](s: Sequence[A])(elem: A)(op: (A,A) => A): A =
+      def _loop(s: Sequence[A], acc: A ): A = s match
+        case Cons(h,t) => _loop(t,op(acc,h))
+        case _ => acc
+      _loop(s,elem)

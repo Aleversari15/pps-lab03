@@ -22,5 +22,10 @@ class Lab03Test:
     assertEquals(coursesExpected, findCourses(seq))
     assertEquals(Nil(), findCourses(Nil()))
 
+  @Test def testFoldLeft() =
+    val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+    assertEquals(17, foldLeft(lst)(1)(_ + _))
+    assertEquals(-16, foldLeft(lst)(0)(_ - _))
+
 
 
