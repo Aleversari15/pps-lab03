@@ -8,6 +8,8 @@ import org.junit.Assert.*
 class SequenceTest:
   import u03.Sequences.*
   import Sequence.*
+  import u03.Lab03.*
+  import Lab03.*
 
   val sequence: Sequence[Int] = Cons(10, Cons(20, Cons(30, Nil())))
 

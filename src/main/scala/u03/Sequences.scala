@@ -28,7 +28,7 @@ object Sequences: // Essentially, generic linkedlists
       case Cons(_, t) => filter(t)(pred)
       case Nil() => Nil()
 
-    // Lab 03
+    /*// Lab 03
 
     /*
      * Skip the first n elements of the sequence
@@ -60,11 +60,6 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [], [] => []
      */
     def concat[A](s1: Sequence[A], s2: Sequence[A]): Sequence[A] = (s1, s2) match
-      /*case (Nil(), Nil()) => Nil()
-      case _ => (s1,s2) match
-        case (Nil(), _) => s2
-        case (_, Nil()) => s1
-        case (Cons(h,t), Cons(h2,t2)) => Cons(h,concat(t, Cons(h2,t2)))*/
       case (Nil(), _) => s2
       case (_, Nil()) => s1
       case (Cons(h, t), Cons(h2, t2)) => Cons(h, concat(t, Cons(h2, t2)))
@@ -75,11 +70,6 @@ object Sequences: // Essentially, generic linkedlists
      * E.g., [10] => [10]
      * E.g., [] => []
      */
-      /*
-      * Ad ogni iterazione:
-      * - richiamo la funzione sulla sequenza rimanente (cioè la tail)
-      * - creo una sequenza che ha come testa h e come coda ciò che ho accumulato
-      * */
     def reverse[A](s: Sequence[A]): Sequence[A] =
       @tailrec
       def _loop(seq: Sequence[A], acc: Sequence[A]) : Sequence[A] = seq match
@@ -98,7 +88,7 @@ object Sequences: // Essentially, generic linkedlists
       def _loop(seq: Sequence[A], acc: Sequence[B]): Sequence[B] = seq match
         case Nil() => acc
         case Cons(h, t) => _loop(t, concat(acc, mapper(h)))
-      _loop(s, Nil())
+      _loop(s, Nil()) */
 
     /*
      * Get the minimum element in the sequence
