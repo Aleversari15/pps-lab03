@@ -6,15 +6,17 @@ import u03.Sequences.*
 import u02.Modules.Person
 import u02.Modules.Person.Teacher
 import u02.Modules.*
-
+import u03.Streams.*
+import u03.Streams.Stream.*
 import scala.annotation.tailrec
+
 
 object Lab03:
 
   object Lab03:
     //TASK 2
     def findCourses(p: Sequence[Person]): Sequence[String] =
-    flatMap(filter(p)(!isStudent(_))) (t => t match
+    flatMap(Sequence.filter(p)(!isStudent(_))) (t => t match
         case Teacher(n,c) => Cons(c,Nil()))
 
     def foldLeft[A](s: Sequence[A])(elem: A)(op: (A,A) => A): A =
@@ -31,4 +33,5 @@ object Lab03:
         case Nil() => acc
       _loop(findCourses(s), 0)
 
-    //TASK 3
+    //TASK 3 (In Streams.scala)
+
