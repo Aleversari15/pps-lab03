@@ -1,15 +1,10 @@
 package u03
 
-import u03.Sequences
 import u03.Sequences.Sequence.*
 import u03.Sequences.*
-import u02.Modules.Person
 import u02.Modules.Person.Teacher
 import u02.Modules.*
-import u03.Streams.*
-import u03.Streams.Stream.*
 import scala.annotation.tailrec
-
 
 object Lab03:
 
