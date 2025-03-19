@@ -17,6 +17,7 @@ class Lab03Test:
   val p3 = Teacher("Anna", "Matematica")
   val seq: Sequence[Person] = Cons(p1, Cons(p2, Cons(p3, Nil())))
 
+  //TASK 2 - LISTS
   @Test def testFindCourses() =
     val coursesExpected: Sequence[String] = Cons("Storia", Cons("Matematica", Nil()))
     assertEquals(coursesExpected, findCourses(seq))
@@ -26,6 +27,11 @@ class Lab03Test:
     val lst = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
     assertEquals(17, foldLeft(lst)(1)(_ + _))
     assertEquals(-16, foldLeft(lst)(0)(_ - _))
+
+  @Test def testCountCourses() =
+    assertEquals(2, countCourses(seq))
+
+  //TASK 3 - STREAMS
 
 
 
